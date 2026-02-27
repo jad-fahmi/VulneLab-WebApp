@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search - Vulnerable</title>
+</head>
+<body>
+    <h2>Search</h2>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search..."><br><br>
+        <button type="submit">Search</button>
+    </form>
+    {% if result %}
+        <p>You searched for: {{ result }}</p>
+    {% endif %}
+</body>
+</html>
