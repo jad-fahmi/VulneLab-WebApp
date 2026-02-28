@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Storage - Vulnerable</title>
+</head>
+<body>
+    <h2>Password Storage - Vulnerable</h2>
+    <p>This app stores passwords in plain text. Click the button to dump the database.</p>
+    <form method="POST">
+        <button type="submit">Dump Database</button>
+    </form>
+    {% if users %}
+        <h3>Users:</h3>
+        <table border="1">
+            <tr><th>ID</th><th>Username</th><th>Password</th></tr>
+            {% for user in users %}
+                <tr><td>{{ user[0] }}</td><td>{{ user[1] }}</td><td>{{ user[2] }}</td></tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
