@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusBank - Transfer</title>
+</head>
+<body>
+    <h2>NexusBank</h2>
+    <h3>Transfer Funds</h3>
+    {% if success %}<p style="color:green">{{ success }}</p>{% endif %}
+    <form method="POST">
+        <input type="text" name="receiver" placeholder="Recipient username"><br><br>
+        <input type="number" name="amount" placeholder="Amount" step="0.01"><br><br>
+        <input type="text" name="comment" placeholder="Comment (optional)"><br><br>
+        <button type="submit">Transfer</button>
+    </form>
+    <nav>
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</body>
+</html>

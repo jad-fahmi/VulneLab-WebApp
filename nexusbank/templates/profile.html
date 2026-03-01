@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusBank - Profile</title>
+</head>
+<body>
+    <h2>NexusBank</h2>
+    <h3>Profile</h3>
+    <p><strong>ID:</strong> {{ user[0] }}</p>
+    <p><strong>Username:</strong> {{ user[1] }}</p>
+    <p><strong>Balance:</strong> ${{ user[3] }}</p>
+    {% if flag %}
+        <p style="color:green"><strong>{{ flag }}</strong></p>
+    {% endif %}
+    <nav>
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</body>
+</html>

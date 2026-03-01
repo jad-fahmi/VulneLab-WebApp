@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusBank - Admin</title>
+</head>
+<body>
+    <h2>NexusBank</h2>
+    <h3>Admin Panel</h3>
+    {% if access %}
+        <p style="color:green"><strong>FLAG{bac_nexusbank}</strong></p>
+        <p>Welcome, admin. You have full access.</p>
+    {% else %}
+        <p style="color:red">Access denied. Admins only.</p>
+    {% endif %}
+    <nav>
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</body>
+</html>

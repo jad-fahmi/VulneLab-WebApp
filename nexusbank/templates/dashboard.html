@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusBank - Dashboard</title>
+</head>
+<body>
+    <h2>NexusBank</h2>
+    <h3>Welcome, {{ user[1] }}!</h3>
+    <p><strong>Balance:</strong> ${{ user[3] }}</p>
+    {% if session.get("flag1") %}
+        <p style="color:green"><strong>{{ session.get("flag1") }}</strong></p>
+    {% endif %}
+    <h4>Incoming Transfers:</h4>
+    {% if transactions %}
+        {% for t in transactions %}
+            <p><strong>From:</strong> {{ t[1] }} | <strong>Amount:</strong> ${{ t[3] }} | <strong>Comment:</strong> {{ t[4]|safe }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No transactions yet.</p>
+    {% endif %}
+    <nav>
+        <a href="/profile?id={{ user[0] }}">My Profile</a> |
+        <a href="/transfer">Transfer</a> |
+        <a href="/admin">Admin Panel</a> |
+        <a href="/logout">Logout</a>
+        <a href="/hints">Hints</a> |
+    </nav>
+</body>
+</html>

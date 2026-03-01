@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusBank - Hints</title>
+</head>
+<body>
+    <h2>NexusBank — Hints</h2>
+    <p>Stuck? Here are some progressive hints for each flag.</p>
+
+    <h3>Flag 1 — Login Page</h3>
+    <details><summary>Hint 1</summary><p>Try logging in with unusual input.</p></details>
+    <details><summary>Hint 2</summary><p>What happens if you put a single quote in the username field?</p></details>
+    <details><summary>Hint 3</summary><p>Try: <code>' OR '1'='1</code> as the username with any password.</p></details>
+
+    <h3>Flag 2 — Transfer Page</h3>
+    <details><summary>Hint 1</summary><p>Try sending a transfer with something unusual in the comment field.</p></details>
+    <details><summary>Hint 2</summary><p>What if the comment contained HTML?</p></details>
+    <details><summary>Hint 3</summary><p>Try: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> as the comment, then check the dashboard.</p></details>
+
+    <h3>Flag 3 — Profile Page</h3>
+    <details><summary>Hint 1</summary><p>Look closely at the URL when viewing your profile.</p></details>
+    <details><summary>Hint 2</summary><p>What happens if you change the number in the URL?</p></details>
+    <details><summary>Hint 3</summary><p>Try: <code>/profile?id=2</code> or <code>/profile?id=3</code>.</p></details>
+
+    <h3>Flag 4 — Admin Panel</h3>
+    <details><summary>Hint 1</summary><p>Every banking app has an admin panel. Can you find it?</p></details>
+    <details><summary>Hint 2</summary><p>Try navigating to common admin paths.</p></details>
+    <details><summary>Hint 3</summary><p>Try: <code>/admin</code> — but think about how you might get in as a regular user.</p></details>
+
+    <nav>
+        <br><a href="/dashboard">Back to Dashboard</a>
+    </nav>
+</body>
+</html>
