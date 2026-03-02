@@ -1,12 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Panel - Vulnerable</title>
+    <title>vulnlab-web - Admin Panel</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #e94560; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .warning { background: #3d0000; border: 1px solid #e94560; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #e94560; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #0f3460; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #0f3460; }
+        h3 { color: #e94560; }
+        a { color: #e94560; }
+    </style>
 </head>
 <body>
-    <h2>Admin Panel</h2>
-    <p>Welcome to the admin panel. You have full access.</p>
-    <a href="/dashboard">Back</a>
+    <div class="nav">
+        <h2>Admin Panel</h2>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="warning">
+        Access control check failed — any logged in user can reach this page!
+    </div>
+
+    <h3>Secret Data</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>All Users</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
