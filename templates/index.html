@@ -3,56 +3,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VulneLab-WebApp</title>
+    <title>vulnlab-web - Web Security Learning Environment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d0d0d;
+            color: #eee;
+            min-height: 100vh;
+        }
+
+        header {
+            border-bottom: 1px solid #1a1a1a;
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e94560;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #eee;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: #e94560; }
+
+        .hero {
+            text-align: center;
+            padding: 80px 60px 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span { color: #e94560; }
+
+        .hero p {
+            font-size: 18px;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            font-family: Arial, sans-serif;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .section {
+            padding: 60px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e94560;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #1e1e1e;
+            border-radius: 8px;
+            padding: 25px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            border-color: #e94560;
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .card-number {
+            font-size: 12px;
+            color: #444;
+        }
+
+        .card-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #333;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #eee;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #777;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 13px;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            transition: background 0.2s;
+        }
+
+        .btn-vulnerable {
+            background: #1a0a0a;
+            color: #e94560;
+            border: 1px solid #e94560;
+        }
+
+        .btn-vulnerable:hover { background: #e94560; color: #fff; }
+
+        .btn-secure {
+            background: #0a1a0a;
+            color: #4ecca3;
+            border: 1px solid #4ecca3;
+        }
+
+        .btn-secure:hover { background: #4ecca3; color: #000; }
+
+        .warning-bar {
+            background: #1a0a0a;
+            border-top: 1px solid #2a1010;
+            border-bottom: 1px solid #2a1010;
+            padding: 15px 60px;
+            font-size: 13px;
+            color: #e94560;
+            text-align: center;
+        }
+
+        .how-it-works {
+            padding: 60px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #e94560;
+            margin-bottom: 15px;
+        }
+
+        .step h4 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 13px;
+            color: #777;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        footer {
+            border-top: 1px solid #1a1a1a;
+            padding: 30px 60px;
+            text-align: center;
+            font-size: 13px;
+            color: #444;
+        }
+
+        footer a { color: #e94560; text-decoration: none; }
+    </style>
 </head>
 <body>
-    <h1>VulneLab-WebApp</h1>
-    <p>A hands-on web security learning environment. Choose a lab below to get started.</p>
 
-    <h2>Labs</h2>
-    <table border="1">
-        <tr>
-            <th>#</th>
-            <th>Vulnerability</th>
-            <th>Vulnerable</th>
-            <th>Secure</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>SQL Injection</td>
-            <td><a href="http://127.0.0.1:5001">Launch</a></td>
-            <td><a href="http://127.0.0.1:5002">Launch</a></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Stored XSS</td>
-            <td><a href="http://127.0.0.1:5003">Launch</a></td>
-            <td><a href="http://127.0.0.1:5004">Launch</a></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Reflected XSS</td>
-            <td><a href="http://127.0.0.1:5005">Launch</a></td>
-            <td><a href="http://127.0.0.1:5006">Launch</a></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>IDOR</td>
-            <td><a href="http://127.0.0.1:5007">Launch</a></td>
-            <td><a href="http://127.0.0.1:5008">Launch</a></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Weak Password Storage</td>
-            <td><a href="http://127.0.0.1:5009">Launch</a></td>
-            <td><a href="http://127.0.0.1:5010">Launch</a></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Broken Access Control</td>
-            <td><a href="http://127.0.0.1:5011">Launch</a></td>
-            <td><a href="http://127.0.0.1:5012">Launch</a></td>
-        </tr>
-    </table>
+    <header>
+        <div class="logo">vulnlab<span>-web</span></div>
+        <nav>
+            <a href="https://github.com/jad-fahmi/vulnlab-web" target="_blank">GitHub</a>
+            <a href="/docs/tutorials" target="_blank">Tutorials</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Learn Web Security<br>by <span>Breaking Things</span></h1>
+        <p>
+            A hands-on penetration testing practice environment.
+            Exploit real vulnerabilities, then see exactly how to fix them.
+            Everything runs locally on your own machine.
+        </p>
+        <div class="hero-badges">
+            <span class="badge">Python 3.10+</span>
+            <span class="badge">Flask</span>
+            <span class="badge">SQLite</span>
+            <span class="badge">bcrypt</span>
+            <span class="badge">6 Vulnerabilities</span>
+            <span class="badge">Beginner Friendly</span>
+        </div>
+    </div>
+
+    <div class="warning-bar">
+        For educational purposes only. Run locally. Never deploy vulnerable versions to a public server.
+    </div>
+
+    <div class="section">
+        <div class="section-title">Vulnerabilities</div>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">01</span>
+                    <span class="card-tag">Authentication</span>
+                </div>
+                <h3>SQL Injection</h3>
+                <p>Manipulate database queries to bypass authentication entirely without knowing any password.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5001" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5002" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">02</span>
+                    <span class="card-tag">XSS</span>
+                </div>
+                <h3>Stored XSS</h3>
+                <p>Inject a persistent malicious script into the database that executes for every visitor automatically.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5003" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5004" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">03</span>
+                    <span class="card-tag">XSS</span>
+                </div>
+                <h3>Reflected XSS</h3>
+                <p>Craft a malicious URL that executes a script in the victim's browser the moment they click it.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5005" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5006" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">04</span>
+                    <span class="card-tag">Access Control</span>
+                </div>
+                <h3>IDOR</h3>
+                <p>Access any user's private data including SSN and address by changing a single number in the URL.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5007" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5008" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">05</span>
+                    <span class="card-tag">Authentication</span>
+                </div>
+                <h3>Weak Password Storage</h3>
+                <p>See why plain text password storage turns any database breach into an instant account takeover.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5009" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5010" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">06</span>
+                    <span class="card-tag">Access Control</span>
+                </div>
+                <h3>Broken Access Control</h3>
+                <p>Access the admin panel as a regular user by navigating directly to the URL — no tools needed.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5011" class="btn btn-vulnerable" target="_blank">Vulnerable</a>
+                    <a href="http://127.0.0.1:5012" class="btn btn-secure" target="_blank">Secure</a>
+                </div>
+            </div>
+
+
+            <div class="card" style="border-color: #4da6ff; grid-column: 1 / -1;">
+                <div class="card-header">
+                    <span class="card-number">07</span>
+                    <span class="card-tag" style="color: #4da6ff; border-color: #4da6ff;">Practice Target</span>
+                </div>
+                 <h3 style="color: #4da6ff;">NexusBank — Vulnerable Banking App</h3>
+                 <p>A realistic fake banking portal with multiple hidden vulnerabilities. No guidance — find and exploit them yourself. Use the hints page inside if you get stuck.</p>
+                <div class="card-links">
+                    <a href="http://127.0.0.1:5013" class="btn" style="background: #0a1525; color: #4da6ff; border: 1px solid #4da6ff;" target="_blank">Launch NexusBank</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="how-it-works">
+        <div class="section-title">How It Works</div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h4>Pick a Vulnerability</h4>
+                <p>Choose any vulnerability from the list above and click the Vulnerable button.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h4>Run the App</h4>
+                <p>Navigate to the vulnerability folder and run python app.py in your terminal.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h4>Exploit It</h4>
+                <p>Follow the instructions in the app and its README to exploit the vulnerability.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">04</div>
+                <h4>See the Fix</h4>
+                <p>Run the secure version and try the same attack to see how the fix stops it.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">05</div>
+                <h4>Put It All Together</h4>
+                <p>Think you've got it? Test your skills on NexusBank — a realistic fake banking portal with hidden vulnerabilities and no instructions.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Built by <a href="https://github.com/jad-fahmi">jad-fahmi</a> for learning and portfolio purposes.
+    </footer>
+
 </body>
 </html>
