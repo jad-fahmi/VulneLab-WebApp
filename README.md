@@ -1,4 +1,4 @@
-# vulnlab-web
+# VulneLab-WebApp
 
 A hands-on web security learning environment built with Python and Flask.
 This project lets you practice exploiting the most common web vulnerabilities
@@ -173,18 +173,6 @@ This project contains intentionally vulnerable code for educational purposes onl
 - Flask
 - SQLite
 - bcrypt
-
----
-
-## Intro Video
-
-Watch Introduction to vulnlab-web:
-
-[![INTRO - vulnlab-web](https://img.youtube.com/vi/NJCsaGgIPDo/maxresdefault.jpg)](https://www.youtube.com/watch?v=NJCsaGgIPDo)
-
-> Click the thumbnail above to watch it on YouTube.
-
----
 
 
 ##  Future Plans
