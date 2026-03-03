@@ -1,15 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Profile - Vulnerable</title>
+    <title>vulnlab-web - IDOR Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #e94560; }
+        .profile-box { background: #16213e; padding: 25px; border-radius: 10px; margin-top: 20px; }
+        .field { margin: 12px 0; padding: 10px; background: #0f3460; border-radius: 5px; }
+        .label { color: #aaa; font-size: 13px; }
+        .value { font-size: 16px; margin-top: 3px; }
+        .warning { background: #3d0000; border: 1px solid #e94560; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #e94560; }
+        .safe { background: #003d00; border: 1px solid #4ecca3; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #4ecca3; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        a { color: #e94560; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-top: 20px; }
+    </style>
 </head>
 <body>
-    <h2>User Profile</h2>
-    <p><strong>ID:</strong> {{ user[0] }}</p>
-    <p><strong>Username:</strong> {{ user[1] }}</p>
-    <p><strong>Email:</strong> {{ user[2] }}</p>
-    <p><strong>Balance:</strong> {{ user[3] }}</p>
-    <a href="/">Back</a>
+    <div class="nav">
+        <h2>IDOR - Profile Viewer</h2>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <p>Logged in as: <strong>{{ logged_in_as }}</strong></p>
+
+    {% if not is_own_profile %}
+    <div class="warning">
+         <strong>IDOR Detected!</strong> You are viewing someone else's private profile!
+    </div>
+    {% else %}
+    <div class="safe">
+         You are viewing your own profile.
+    </div>
+    {% endif %}
+
+    <div class="profile-box">
+        <div class="field">
+            <div class="label">Username</div>
+            <div class="value">{{ user[1] }}</div>
+        </div>
+        <div class="field">
+            <div class="label">Email</div>
+            <div class="value">{{ user[2] }}</div>
+        </div>
+        <div class="field">
+            <div class="label">Phone</div>
+            <div class="value">{{ user[3] }}</div>
+        </div>
+        <div class="field">
+            <div class="label">Address</div>
+            <div class="value">{{ user[4] }}</div>
+        </div>
+        <div class="field">
+            <div class="label">SSN</div>
+            <div class="value">{{ user[5] }}</div>
+        </div>
+    </div>
+
+    <div class="hint">
+         <strong>Try changing the URL:</strong> 
+        <code>http://127.0.0.1:5007/profile?id=1</code>, 
+        <code>?id=2</code>, <code>?id=3</code>
+    </div>
 </body>
 </html>

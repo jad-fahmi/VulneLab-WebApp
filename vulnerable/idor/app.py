@@ -1,37 +1,65 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for
 import sqlite3
+
 import os
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 
-app = Flask(__name__)
-DB = os.path.join(os.path.dirname(__file__), "users.db")
+app.secret_key = 'supersecretkey'
 
-def init_db():
-    with sqlite3.connect(DB) as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
-                username TEXT,
-                email TEXT,
-                balance TEXT
-            )
-        """)
-        conn.execute("INSERT OR IGNORE INTO users VALUES (1, 'alice', 'alice@email.com', '$5,000')")
-        conn.execute("INSERT OR IGNORE INTO users VALUES (2, 'bob', 'bob@email.com', '$12,300')")
-        conn.execute("INSERT OR IGNORE INTO users VALUES (3, 'charlie', 'charlie@email.com', '$800')")
+def get_db():
+    conn = sqlite3.connect('users.db')
+    return conn
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+@app.route('/')
+def home():
+    return redirect(url_for('login'))
 
-@app.route("/profile")
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("SELECT * FROM users WHERE username = ?", (username,))
+        user = c.fetchone()
+        conn.close()
+        if user:
+            session['user_id'] = user[0]
+            session['username'] = user[1]
+            return redirect(url_for('profile', id=user[0]))
+        else:
+            error = "User not found."
+    return render_template('login.html', error=error)
+
+@app.route('/profile')
 def profile():
-    user_id = request.args.get("id", 1)
-    with sqlite3.connect(DB) as conn:
-        user = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
-    if not user:
-        return "User not found.", 404
-    return render_template("profile.html", user=user)
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
 
-if __name__ == "__main__":
-    init_db()
-    app.run(port=5007, debug=True)
+    user_id = request.args.get('id', session['user_id'])
+
+    # VULNERABLE: No check if the logged in user owns this profile
+    # Anyone can change the id parameter to view any profile
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    user = c.fetchone()
+    conn.close()
+
+    if not user:
+        return "User not found", 404
+
+    return render_template('profile.html',
+        user=user,
+        logged_in_as=session['username'],
+        is_own_profile=(int(user_id) == session['user_id'])
+    )
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5007)

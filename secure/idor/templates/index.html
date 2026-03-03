@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>IDOR - Secure</title>
+    <title>VulneLab-WebApp - IDOR Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #16213e; padding: 40px; border-radius: 10px; width: 350px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        h2 { text-align: center; color: #e94560; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #e94560; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer; }
+        .error { color: #e94560; text-align: center; }
+        .hint { margin-top: 20px; padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; }
+    </style>
 </head>
 <body>
-    <h2>Welcome, Alice!</h2>
-    <a href="/profile">View My Profile</a>
+    <div class="box">
+        <h2>IDOR Demo Login</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required/>
+            <button type="submit">Login</button>
+        </form>
+        {% if error %}<p class="error">{{ error }}</p>{% endif %}
+        <div class="hint">
+             <strong>Available users:</strong> alice, bob, charlie<br>
+            After login, try changing the <code>?id=</code> in the URL!
+        </div>
+    </div>
 </body>
 </html>
