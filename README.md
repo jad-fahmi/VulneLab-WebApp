@@ -1,4 +1,4 @@
-# vulnlab-web
+# VulneLab-Webapp
 
 A hands-on web security learning environment built with Python and Flask.
 
