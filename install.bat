@@ -1,5 +1,5 @@
 @echo off
-echo Installing VulneLab dependencies...
+echo Installing VulnLab dependencies...
 echo.
 
 python --version >nul 2>&1

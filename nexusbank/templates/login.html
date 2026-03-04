@@ -2,16 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NexusBank - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusBank - Secure Online Banking</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: #003366; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .bank-logo span { color: #4da6ff; }
+        header nav a { color: #aac4e0; text-decoration: none; margin-left: 20px; font-size: 14px; }
+
+        .main { flex: 1; display: flex; }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #003366, #005599);
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+        }
+
+        .left-panel h1 { font-size: 36px; margin-bottom: 20px; line-height: 1.3; }
+        .left-panel p { font-size: 16px; color: #aac4e0; line-height: 1.7; margin-bottom: 30px; }
+
+        .features { list-style: none; }
+        .features li { padding: 8px 0; color: #aac4e0; font-size: 14px; }
+        .features li::before { content: "- "; color: #4da6ff; }
+
+        .right-panel {
+            width: 420px;
+            background: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel h2 { font-size: 24px; color: #003366; margin-bottom: 8px; }
+        .right-panel p { color: #888; font-size: 14px; margin-bottom: 30px; }
+
+        label { font-size: 13px; color: #555; display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+        input:focus { outline: none; border-color: #003366; }
+
+        button { width: 100%; padding: 13px; background: #003366; color: white; border: none; border-radius: 5px; font-size: 15px; cursor: pointer; }
+        button:hover { background: #005599; }
+
+        .error { color: #cc0000; font-size: 13px; margin-bottom: 15px; padding: 10px; background: #fff0f0; border-radius: 5px; border: 1px solid #ffcccc; }
+
+        .footer-note { margin-top: 20px; font-size: 12px; color: #aaa; text-align: center; }
+
+        footer { background: #003366; color: #aac4e0; text-align: center; padding: 15px; font-size: 12px; }
+    </style>
 </head>
 <body>
-    <h2>NexusBank</h2>
-    <h3>Login</h3>
-    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username"><br><br>
-        <input type="password" name="password" placeholder="Password"><br><br>
-        <button type="submit">Login</button>
-    </form>
+    <header>
+        <div class="bank-logo">NEXUS<span>BANK</span></div>
+        <nav>
+            <a href="#">Personal</a>
+            <a href="#">Business</a>
+            <a href="#">Support</a>
+        </nav>
+    </header>
+
+    <div class="main">
+        <div class="left-panel">
+            <h1>Banking made simple, secure, and smart.</h1>
+            <p>Manage your finances with confidence. NexusBank gives you full control over your money, anytime, anywhere.</p>
+            <ul class="features">
+                <li>Instant transfers between accounts</li>
+                <li>Real time transaction history</li>
+                <li>256-bit SSL encryption</li>
+                <li>24/7 fraud monitoring</li>
+            </ul>
+        </div>
+
+        <div class="right-panel">
+            <h2>Welcome back</h2>
+            <p>Sign in to your NexusBank account</p>
+
+            {% if error %}
+            <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required/>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required/>
+                <button type="submit">Sign In</button>
+            </form>
+
+            <div class="footer-note">
+                Protected by NexusBank Security. Do not share your credentials.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 NexusBank. All rights reserved. Member FDIC. Equal Housing Lender.
+    </footer>
 </body>
 </html>

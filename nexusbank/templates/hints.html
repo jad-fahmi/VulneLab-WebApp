@@ -2,34 +2,165 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusBank - Hints</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; min-height: 100vh; }
+
+        header { background: #003366; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .bank-logo span { color: #4da6ff; }
+        nav a { color: #aac4e0; text-decoration: none; margin-left: 25px; font-size: 14px; }
+        nav a:hover { color: white; }
+
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+
+        h2 { font-size: 24px; color: #003366; margin-bottom: 10px; }
+        .subtitle { color: #888; font-size: 14px; margin-bottom: 35px; line-height: 1.6; }
+
+        .challenge { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 20px; overflow: hidden; }
+
+        .challenge-header { padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        .challenge-number { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .challenge-title { font-size: 17px; font-weight: bold; color: #003366; margin-top: 4px; }
+        .difficulty { font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+        .easy { background: #e8f5e9; color: #2e7d32; }
+        .medium { background: #fff8e1; color: #f57f17; }
+        .hard { background: #fce4ec; color: #c62828; }
+
+        .challenge-body { padding: 20px 25px; }
+        .challenge-body p { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 15px; }
+
+        .hints-list { list-style: none; }
+        .hints-list li { padding: 10px 15px; background: #f8f9fa; border-radius: 5px; margin-bottom: 8px; font-size: 13px; color: #555; border-left: 3px solid #003366; line-height: 1.5; }
+
+        .flag-format { background: #f0f2f5; padding: 10px 15px; border-radius: 5px; font-family: 'Courier New', monospace; font-size: 13px; color: #003366; margin-top: 10px; }
+
+        .intro-card { background: #003366; color: white; padding: 25px; border-radius: 8px; margin-bottom: 30px; }
+        .intro-card h3 { font-size: 18px; margin-bottom: 10px; color: #4da6ff; }
+        .intro-card p { font-size: 14px; color: #aac4e0; line-height: 1.7; }
+        .intro-card ul { margin-top: 10px; padding-left: 20px; }
+        .intro-card ul li { font-size: 14px; color: #aac4e0; padding: 4px 0; }
+
+        footer { background: #003366; color: #aac4e0; text-align: center; padding: 15px; font-size: 12px; margin-top: 60px; }
+    </style>
 </head>
 <body>
-    <h2>NexusBank — Hints</h2>
-    <p>Stuck? Here are some progressive hints for each flag.</p>
+    <header>
+        <div class="bank-logo">NEXUS<span>BANK</span></div>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/hints">Hints</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
 
-    <h3>Flag 1 — Login Page</h3>
-    <details><summary>Hint 1</summary><p>Try logging in with unusual input.</p></details>
-    <details><summary>Hint 2</summary><p>What happens if you put a single quote in the username field?</p></details>
-    <details><summary>Hint 3</summary><p>Try: <code>' OR '1'='1</code> as the username with any password.</p></details>
+    <div class="container">
+        <h2>Challenge Hints</h2>
+        <p class="subtitle">
+            NexusBank has several security vulnerabilities hidden throughout the application.
+            Your goal is to find and exploit all of them. Each successful exploit reveals a flag.
+            Use the hints below if you get stuck.
+        </p>
 
-    <h3>Flag 2 — Transfer Page</h3>
-    <details><summary>Hint 1</summary><p>Try sending a transfer with something unusual in the comment field.</p></details>
-    <details><summary>Hint 2</summary><p>What if the comment contained HTML?</p></details>
-    <details><summary>Hint 3</summary><p>Try: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> as the comment, then check the dashboard.</p></details>
+        <div class="intro-card">
+            <h3>How This Works</h3>
+            <p>There are 4 flags hidden in NexusBank. Find them all by exploiting the vulnerabilities.</p>
+            <ul>
+                <li>Flags appear on the page after a successful exploit</li>
+                <li>Flag format: FLAG{vulnerability_name}</li>
+                <li>Try to find each vulnerability yourself before reading the hints</li>
+                <li>Available accounts: johndoe / password123, janesmith / letmein, bobwilson / qwerty</li>
+            </ul>
+        </div>
 
-    <h3>Flag 3 — Profile Page</h3>
-    <details><summary>Hint 1</summary><p>Look closely at the URL when viewing your profile.</p></details>
-    <details><summary>Hint 2</summary><p>What happens if you change the number in the URL?</p></details>
-    <details><summary>Hint 3</summary><p>Try: <code>/profile?id=2</code> or <code>/profile?id=3</code>.</p></details>
+        <div class="challenge">
+            <div class="challenge-header">
+                <div>
+                    <div class="challenge-number">Challenge 01</div>
+                    <div class="challenge-title">Get In Without a Password</div>
+                </div>
+                <span class="difficulty easy">Easy</span>
+            </div>
+            <div class="challenge-body">
+                <p>The login page has a critical vulnerability that allows you to bypass authentication entirely without knowing any valid password.</p>
+                <ul class="hints-list">
+                    <li>Hint 1: Think about how the login form sends your input to the server and how the server uses it to check the database.</li>
+                    <li>Hint 2: What happens if your input contains special characters that the database interprets as part of its own language?</li>
+                    <li>Hint 3: Try entering a single quote in the username field and observe what happens.</li>
+                    <li>Hint 4: The username field is vulnerable. Try: <code>' OR '1'='1</code></li>
+                </ul>
+                <div class="flag-format">Flag format: FLAG{sqli_nexusbank}</div>
+            </div>
+        </div>
 
-    <h3>Flag 4 — Admin Panel</h3>
-    <details><summary>Hint 1</summary><p>Every banking app has an admin panel. Can you find it?</p></details>
-    <details><summary>Hint 2</summary><p>Try navigating to common admin paths.</p></details>
-    <details><summary>Hint 3</summary><p>Try: <code>/admin</code> — but think about how you might get in as a regular user.</p></details>
+        <div class="challenge">
+            <div class="challenge-header">
+                <div>
+                    <div class="challenge-number">Challenge 02</div>
+                    <div class="challenge-title">Leave a Permanent Mark</div>
+                </div>
+                <span class="difficulty easy">Easy</span>
+            </div>
+            <div class="challenge-body">
+                <p>The transfer system allows users to add comments to their transactions. These comments are displayed to everyone who views the transaction history.</p>
+                <ul class="hints-list">
+                    <li>Hint 1: What if the comment field accepts more than just plain text?</li>
+                    <li>Hint 2: Try submitting a comment that contains HTML tags and see how the page renders it.</li>
+                    <li>Hint 3: What if your comment contained a script tag? Would the browser execute it?</li>
+                    <li>Hint 4: Try this as a transfer comment: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></li>
+                </ul>
+                <div class="flag-format">Flag format: FLAG{xss_nexusbank}</div>
+            </div>
+        </div>
 
-    <nav>
-        <br><a href="/dashboard">Back to Dashboard</a>
-    </nav>
+        <div class="challenge">
+            <div class="challenge-header">
+                <div>
+                    <div class="challenge-number">Challenge 03</div>
+                    <div class="challenge-title">Look Where You Should Not</div>
+                </div>
+                <span class="difficulty medium">Medium</span>
+            </div>
+            <div class="challenge-body">
+                <p>The profile page shows your personal information. But does it only show YOUR information?</p>
+                <ul class="hints-list">
+                    <li>Hint 1: Look carefully at the URL when you visit your profile page.</li>
+                    <li>Hint 2: Is there a parameter in the URL that identifies which profile to show?</li>
+                    <li>Hint 3: What happens if you change that parameter to a different number?</li>
+                    <li>Hint 4: Try changing the id parameter in the URL to 2, 3 or 4.</li>
+                </ul>
+                <div class="flag-format">Flag format: FLAG{idor_nexusbank}</div>
+            </div>
+        </div>
+
+        <div class="challenge">
+            <div class="challenge-header">
+                <div>
+                    <div class="challenge-number">Challenge 04</div>
+                    <div class="challenge-title">Find the Hidden Door</div>
+                </div>
+                <span class="difficulty hard">Hard</span>
+            </div>
+            <div class="challenge-body">
+                <p>NexusBank has an admin panel that regular users are not supposed to access. There is no link to it anywhere on the site. Can you find it?</p>
+                <ul class="hints-list">
+                    <li>Hint 1: Admin panels on web applications are usually accessible via a URL. Think about what common admin URLs look like.</li>
+                    <li>Hint 2: The application only checks if you are logged in, not what your role is.</li>
+                    <li>Hint 3: Try navigating directly to common admin paths in the URL bar.</li>
+                    <li>Hint 4: Try visiting /admin directly in your browser while logged in as a regular user.</li>
+                </ul>
+                <div class="flag-format">Flag format: FLAG{bac_nexusbank}</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexusBank. All rights reserved. Member FDIC. Equal Housing Lender.
+    </footer>
 </body>
 </html>

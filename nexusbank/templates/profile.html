@@ -2,20 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusBank - Profile</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; min-height: 100vh; }
+
+        header { background: #003366; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .bank-logo span { color: #4da6ff; }
+        nav a { color: #aac4e0; text-decoration: none; margin-left: 25px; font-size: 14px; }
+        nav a:hover { color: white; }
+
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+
+        h2 { font-size: 24px; color: #003366; margin-bottom: 25px; }
+
+        .profile-card { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
+
+        .profile-header { background: #003366; padding: 30px; color: white; }
+        .profile-header h3 { font-size: 22px; }
+        .profile-header p { color: #aac4e0; font-size: 14px; margin-top: 5px; }
+
+        .profile-body { padding: 30px; }
+
+        .field { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #f5f5f5; }
+        .field:last-child { border-bottom: none; }
+        .field-label { font-size: 13px; color: #888; }
+        .field-value { font-size: 14px; color: #333; font-weight: 500; }
+        .field-value.sensitive { color: #cc0000; font-family: 'Courier New', monospace; }
+
+        .flag-banner { background: #003366; color: #4da6ff; padding: 15px 25px; border-radius: 8px; margin-bottom: 25px; font-family: 'Courier New', monospace; font-size: 15px; border: 1px solid #4da6ff; }
+        .flag-banner strong { color: white; }
+
+        .warning { background: #fff8e1; border: 1px solid #ffe082; padding: 12px 16px; border-radius: 5px; font-size: 13px; color: #795548; margin-bottom: 20px; }
+
+        footer { background: #003366; color: #aac4e0; text-align: center; padding: 15px; font-size: 12px; margin-top: 60px; }
+    </style>
 </head>
 <body>
-    <h2>NexusBank</h2>
-    <h3>Profile</h3>
-    <p><strong>ID:</strong> {{ user[0] }}</p>
-    <p><strong>Username:</strong> {{ user[1] }}</p>
-    <p><strong>Balance:</strong> ${{ user[3] }}</p>
-    {% if flag %}
-        <p style="color:green"><strong>{{ flag }}</strong></p>
-    {% endif %}
-    <nav>
-        <a href="/dashboard">Dashboard</a> |
-        <a href="/logout">Logout</a>
-    </nav>
+    <header>
+        <div class="bank-logo">NEXUS<span>BANK</span></div>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/hints">Hints</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Account Profile</h2>
+
+        {% if flag %}
+        <div class="flag-banner">
+            <strong>Flag found:</strong> {{ flag }}
+        </div>
+        {% endif %}
+
+        {% if flag %}
+        <div class="warning">
+            You are viewing another user's private profile. In a real bank this would expose sensitive customer data to unauthorized parties.
+        </div>
+        {% endif %}
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <h3>{{ user[3] }}</h3>
+                <p>Account holder since 2021</p>
+            </div>
+            <div class="profile-body">
+                <div class="field">
+                    <span class="field-label">Username</span>
+                    <span class="field-value">{{ user[1] }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Email Address</span>
+                    <span class="field-value">{{ user[4] }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Phone Number</span>
+                    <span class="field-value">{{ user[5] }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Home Address</span>
+                    <span class="field-value">{{ user[6] }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Social Security Number</span>
+                    <span class="field-value sensitive">{{ user[7] }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Account Balance</span>
+                    <span class="field-value">${{ "%.2f"|format(user[8]) }}</span>
+                </div>
+                <div class="field">
+                    <span class="field-label">Account Role</span>
+                    <span class="field-value">{{ user[9] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 NexusBank. All rights reserved. Member FDIC. Equal Housing Lender.
+    </footer>
 </body>
 </html>

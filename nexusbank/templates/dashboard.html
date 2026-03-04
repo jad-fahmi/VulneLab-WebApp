@@ -2,29 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusBank - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; min-height: 100vh; }
+
+        header { background: #003366; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .bank-logo span { color: #4da6ff; }
+        nav a { color: #aac4e0; text-decoration: none; margin-left: 25px; font-size: 14px; }
+        nav a:hover { color: white; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        .welcome { margin-bottom: 30px; }
+        .welcome h2 { font-size: 24px; color: #003366; }
+        .welcome p { color: #888; font-size: 14px; margin-top: 5px; }
+
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+        .card-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .card-value { font-size: 28px; font-weight: bold; color: #003366; }
+        .card-sub { font-size: 13px; color: #aaa; margin-top: 5px; }
+
+        .section-title { font-size: 16px; font-weight: bold; color: #003366; margin-bottom: 15px; }
+
+        .transactions { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 12px 16px; text-align: left; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; }
+        td { padding: 14px 16px; font-size: 14px; color: #333; border-bottom: 1px solid #f5f5f5; }
+        tr:last-child td { border-bottom: none; }
+
+        .flag-banner { background: #003366; color: #4da6ff; padding: 15px 25px; border-radius: 8px; margin-bottom: 25px; font-family: 'Courier New', monospace; font-size: 15px; border: 1px solid #4da6ff; }
+        .flag-banner strong { color: white; }
+
+        .quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .quick-link { background: white; padding: 20px; border-radius: 8px; text-align: center; text-decoration: none; color: #003366; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-size: 14px; font-weight: bold; transition: background 0.2s; border: 1px solid #eee; }
+        .quick-link:hover { background: #003366; color: white; }
+
+        footer { background: #003366; color: #aac4e0; text-align: center; padding: 15px; font-size: 12px; margin-top: 60px; }
+    </style>
 </head>
 <body>
-    <h2>NexusBank</h2>
-    <h3>Welcome, {{ user[1] }}!</h3>
-    <p><strong>Balance:</strong> ${{ user[3] }}</p>
-    {% if session.get("flag1") %}
-        <p style="color:green"><strong>{{ session.get("flag1") }}</strong></p>
-    {% endif %}
-    <h4>Incoming Transfers:</h4>
-    {% if transactions %}
-        {% for t in transactions %}
-            <p><strong>From:</strong> {{ t[1] }} | <strong>Amount:</strong> ${{ t[3] }} | <strong>Comment:</strong> {{ t[4]|safe }}</p>
-        {% endfor %}
-    {% else %}
-        <p>No transactions yet.</p>
-    {% endif %}
-    <nav>
-        <a href="/profile?id={{ user[0] }}">My Profile</a> |
-        <a href="/transfer">Transfer</a> |
-        <a href="/admin">Admin Panel</a> |
-        <a href="/logout">Logout</a>
-        <a href="/hints">Hints</a> |
-    </nav>
+    <header>
+        <div class="bank-logo">NEXUS<span>BANK</span></div>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/hints">Hints</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome, {{ user[3] }}</h2>
+            <p>Last login: Today. Account in good standing.</p>
+        </div>
+
+        {% if flag %}
+        <div class="flag-banner">
+            <strong>Flag found:</strong> {{ flag }}
+        </div>
+        {% endif %}
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-label">Checking Balance</div>
+                <div class="card-value">${{ "%.2f"|format(user[8]) }}</div>
+                <div class="card-sub">Available balance</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Account Number</div>
+                <div class="card-value" style="font-size:18px;">NX-000{{ user[0] }}</div>
+                <div class="card-sub">Primary account</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Account Status</div>
+                <div class="card-value" style="font-size:18px; color:#2e7d32;">Active</div>
+                <div class="card-sub">No issues detected</div>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <a href="/transfer" class="quick-link">Transfer Money</a>
+            <a href="/profile" class="quick-link">View Profile</a>
+            <a href="/hints" class="quick-link">Need Hints?</a>
+        </div>
+
+        <div class="section-title">Recent Transactions</div>
+        <div class="transactions">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Amount</th>
+                    <th>Comment</th>
+                </tr>
+                {% for t in transactions %}
+                <tr>
+                    <td>{{ t[3] }}</td>
+                    <td>{{ t[4] }}</td>
+                    <td>${{ "%.2f"|format(t[1]) }}</td>
+                    <td>{{ t[2] | safe }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 NexusBank. All rights reserved. Member FDIC. Equal Housing Lender.
+    </footer>
 </body>
 </html>

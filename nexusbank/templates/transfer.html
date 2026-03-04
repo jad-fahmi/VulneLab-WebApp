@@ -2,21 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusBank - Transfer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; min-height: 100vh; }
+
+        header { background: #003366; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .bank-logo span { color: #4da6ff; }
+        nav a { color: #aac4e0; text-decoration: none; margin-left: 25px; font-size: 14px; }
+        nav a:hover { color: white; }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; }
+
+        h2 { font-size: 24px; color: #003366; margin-bottom: 25px; }
+
+        .transfer-form { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 30px; }
+        .transfer-form h3 { font-size: 18px; color: #003366; margin-bottom: 20px; }
+
+        label { font-size: 13px; color: #555; display: block; margin-bottom: 5px; }
+        input, textarea { width: 100%; padding: 11px; margin-bottom: 18px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; font-family: Arial, sans-serif; }
+        input:focus, textarea:focus { outline: none; border-color: #003366; }
+        textarea { resize: vertical; height: 80px; }
+
+        button { width: 100%; padding: 13px; background: #003366; color: white; border: none; border-radius: 5px; font-size: 15px; cursor: pointer; }
+        button:hover { background: #005599; }
+
+        .history { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
+        .history h3 { font-size: 18px; color: #003366; padding: 20px 25px; border-bottom: 1px solid #eee; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 10px 16px; text-align: left; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; }
+        td { padding: 12px 16px; font-size: 13px; color: #333; border-bottom: 1px solid #f5f5f5; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+
+        .note { font-size: 12px; color: #aaa; margin-top: 15px; }
+
+        footer { background: #003366; color: #aac4e0; text-align: center; padding: 15px; font-size: 12px; margin-top: 60px; }
+    </style>
 </head>
 <body>
-    <h2>NexusBank</h2>
-    <h3>Transfer Funds</h3>
-    {% if success %}<p style="color:green">{{ success }}</p>{% endif %}
-    <form method="POST">
-        <input type="text" name="receiver" placeholder="Recipient username"><br><br>
-        <input type="number" name="amount" placeholder="Amount" step="0.01"><br><br>
-        <input type="text" name="comment" placeholder="Comment (optional)"><br><br>
-        <button type="submit">Transfer</button>
-    </form>
-    <nav>
-        <a href="/dashboard">Dashboard</a> |
-        <a href="/logout">Logout</a>
-    </nav>
+    <header>
+        <div class="bank-logo">NEXUS<span>BANK</span></div>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/hints">Hints</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div>
+            <h2>Transfer Money</h2>
+            <div class="transfer-form">
+                <h3>New Transfer</h3>
+                <form method="POST">
+                    <label>Recipient Username</label>
+                    <input type="text" name="to_username" placeholder="Enter username" required/>
+                    <label>Amount (USD)</label>
+                    <input type="number" name="amount" placeholder="0.00" step="0.01" min="0.01" required/>
+                    <label>Comment</label>
+                    <textarea name="comment" placeholder="Add a note to this transfer..."></textarea>
+                    <button type="submit">Send Transfer</button>
+                </form>
+                <p class="note">Available users to transfer to: johndoe, janesmith, bobwilson</p>
+            </div>
+        </div>
+
+        <div>
+            <h2>Transaction History</h2>
+            <div class="history">
+                <h3>All Transactions</h3>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>Amount</th>
+                        <th>Comment</th>
+                    </tr>
+                    {% for t in transactions %}
+                    <tr>
+                        <td>{{ t[3] }}</td>
+                        <td>{{ t[4] }}</td>
+                        <td>${{ "%.2f"|format(t[1]) }}</td>
+                        <!-- VULNERABLE: Rendering comment as raw HTML -->
+                        <td>{{ t[2] | safe }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 NexusBank. All rights reserved. Member FDIC. Equal Housing Lender.
+    </footer>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# VulneLab-Webapp
+# VulneLab-WebApp
 
 A hands-on web security learning environment built with Python and Flask.
 This project lets you practice exploiting the most common web vulnerabilities
@@ -14,7 +14,7 @@ No prior hacking experience needed. Beginner friendly.
 When learning web security, reading about vulnerabilities is not enough.
 You need to actually exploit them to truly understand how they work.
 
-VulneLab-Webapp gives you a safe place to do exactly that. Every vulnerability in this
+VulneLab-WebApp gives you a safe place to do exactly that. Every vulnerability in this
 project has two versions:
 
 - A **vulnerable version** — intentionally broken code you can attack
@@ -86,15 +86,21 @@ Can you find all 4?
 - [Python 3.10+](https://www.python.org/downloads/) — make sure to check "Add Python to PATH" during installation
 - [Git](https://git-scm.com/download/win)
 
-### Step 1 - Clone the repository
+### Step 1 - Get the project
 
-Open a terminal and run:
+**Option A — Download (Recommended for beginners)**
+1. Go to the [latest release](https://github.com/jad-fahmi/VulneLab-WebApp/releases/latest)
+2. Under "Assets" click **Source code (zip)**
+3. Extract the zip file to a folder on your computer
+
+**Option B — Clone with Git**
 ```
-git clone https://github.com/jad-fahmi/VulneLab-Webapp.git
-cd VulneLab-Webapp
+git clone https://github.com/jad-fahmi/VulneLab-WebApp.git
+cd VulneLab-WebApp
 ```
 
 ---
+
 
 ### Windows — Quick Start (Recommended)
 
@@ -173,6 +179,18 @@ This project contains intentionally vulnerable code for educational purposes onl
 - Flask
 - SQLite
 - bcrypt
+
+---
+
+## Intro Video
+
+Watch Introduction to VulneLab-WebApp:
+
+[![INTRO - VulneLab-WebApp](https://img.youtube.com/vi/NJCsaGgIPDo/maxresdefault.jpg)](https://www.youtube.com/watch?v=NJCsaGgIPDo)
+
+> Click the thumbnail above to watch it on YouTube.
+
+---
 
 
 ##  Future Plans
