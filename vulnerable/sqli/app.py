@@ -32,7 +32,7 @@ def login():
         else:
             error = "Invalid username or password."
 
-    return render_template('login.html', error=error, success=success)
+    return render_template('index.html', error=error, success=success)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

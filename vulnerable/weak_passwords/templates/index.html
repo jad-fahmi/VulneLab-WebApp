@@ -1,23 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Password Storage - Vulnerable</title>
+    <title>vulnlab-web - Weak Password Storage</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #e94560; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #e94560; border: none; border-radius: 5px; color: white; font-size: 15px; cursor: pointer; margin-top: 5px; }
+        button.secondary { background: #444; margin-top: 10px; }
+        .error { color: #e94560; }
+        .success { color: #4ecca3; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
+        .db-dump { background: #16213e; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .db-dump h3 { color: #e94560; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #0f3460; padding: 8px; text-align: left; }
+        td { padding: 8px; border-bottom: 1px solid #0f3460; }
+        .plain { color: #e94560; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <h2>Password Storage - Vulnerable</h2>
-    <p>This app stores passwords in plain text. Click the button to dump the database.</p>
+    <h2>Weak Password Storage - Login</h2>
+
+    <div class="hint">
+        Passwords are stored as plain text in this database.
+        Click "Simulate Database Breach" to see what an attacker would find.
+    </div>
+
     <form method="POST">
-        <button type="submit">Dump Database</button>
+        <input type="text" name="username" placeholder="Username"/>
+        <input type="password" name="password" placeholder="Password"/>
+        <input type="hidden" name="action" value="login"/>
+        <button type="submit">Login</button>
     </form>
-    {% if users %}
-        <h3>Users:</h3>
-        <table border="1">
-            <tr><th>ID</th><th>Username</th><th>Password</th></tr>
-            {% for user in users %}
-                <tr><td>{{ user[0] }}</td><td>{{ user[1] }}</td><td>{{ user[2] }}</td></tr>
+
+    <form method="POST">
+        <input type="hidden" name="action" value="dump"/>
+        <button type="submit" class="secondary">Simulate Database Breach</button>
+    </form>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    {% if success %}<p class="success">{{ success }}</p>{% endif %}
+
+    {% if db_contents %}
+    <div class="db-dump">
+        <h3>Database Contents - Passwords Fully Exposed!</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password (Plain Text)</th>
+            </tr>
+            {% for row in db_contents %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td class="plain">{{ row[2] }}</td>
+            </tr>
             {% endfor %}
         </table>
+    </div>
     {% endif %}
 </body>
 </html>
