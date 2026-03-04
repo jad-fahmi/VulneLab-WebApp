@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Comment Board - Vulnerable</title>
+    <title>vulnlab-web - Stored XSS Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #e94560; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
+        button { padding: 10px 25px; background: #e94560; border: none; border-radius: 5px; color: white; font-size: 15px; cursor: pointer; }
+        .comment-box { background: #16213e; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #e94560; }
+        .comment-user { color: #e94560; font-weight: bold; margin-bottom: 5px; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
-    <h2>Comment Board</h2>
+    <h2>Stored XSS - Comment Board</h2>
+
+    <div class="hint">
+ feature/idor
+         <strong>Try this as a comment:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code>
+
+ feature/xss-reflected
+         <strong>Try this as a comment:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code>
+
+         <strong>Try this as a comment:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code>
+ main
+ main
+    </div>
+
     <form method="POST">
-        <input type="text" name="comment" placeholder="Leave a comment"><br><br>
-        <button type="submit">Submit</button>
+        <input type="text" name="username" placeholder="Your name" required/>
+        <textarea name="comment" placeholder="Write a comment..." rows="3" required></textarea>
+        <button type="submit">Post Comment</button>
     </form>
+
     <h3>Comments:</h3>
     {% for comment in comments %}
-        <p>{{ comment }}</p>
+    <div class="comment-box">
+        <div class="comment-user">{{ comment[1] }}</div>
+        <!-- VULNERABLE: Rendering comment as raw HTML, scripts will execute -->
+        <div>{{ comment[2] | safe }}</div>
+    </div>
     {% endfor %}
 </body>
 </html>

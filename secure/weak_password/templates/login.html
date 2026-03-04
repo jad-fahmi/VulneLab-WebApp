@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>VulneLab-Webapp - Weak Password Storage</title>
+    <title>vulnlab-web - Secure Password Storage</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
-        h2 { color: #e94560; }
+        body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #4ecca3; }
         input { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: #e94560; border: none; border-radius: 5px; color: white; font-size: 15px; cursor: pointer; margin-top: 5px; }
-        button.secondary { background: #444; margin-top: 10px; }
+        button { width: 100%; padding: 10px; background: #4ecca3; border: none; border-radius: 5px; color: #1a1a1a; font-size: 15px; cursor: pointer; margin-top: 5px; }
+        button.secondary { background: #444; color: #eee; margin-top: 10px; }
         .error { color: #e94560; }
         .success { color: #4ecca3; }
         .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
-        .db-dump { background: #16213e; padding: 15px; border-radius: 8px; margin-top: 20px; }
-        .db-dump h3 { color: #e94560; margin-top: 0; }
+        .db-dump { background: #162e16; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .db-dump h3 { color: #4ecca3; margin-top: 0; }
         table { width: 100%; border-collapse: collapse; }
         th { background: #0f3460; padding: 8px; text-align: left; }
-        td { padding: 8px; border-bottom: 1px solid #0f3460; }
-        .plain { color: #e94560; font-weight: bold; }
+        td { padding: 8px; border-bottom: 1px solid #0f3460; font-size: 13px; word-break: break-all; }
+        .hashed { color: #4ecca3; }
     </style>
 </head>
 <body>
-    <h2>Weak Password Storage - Login</h2>
+    <h2>Secure Password Storage - Login</h2>
 
     <div class="hint">
-        Passwords are stored as plain text in this database.
-        Click "Simulate Database Breach" to see what an attacker would find.
+        Passwords are stored as bcrypt hashes. Click "Simulate Database Breach"
+        to see what an attacker would find — useless hashes they cannot reverse.
     </div>
 
     <form method="POST">
@@ -44,18 +44,18 @@
 
     {% if db_contents %}
     <div class="db-dump">
-        <h3>Database Contents - Passwords Fully Exposed!</h3>
+        <h3>Database Contents - Passwords Are Unreadable Hashes!</h3>
         <table>
             <tr>
                 <th>ID</th>
                 <th>Username</th>
-                <th>Password (Plain Text)</th>
+                <th>Password (bcrypt hash)</th>
             </tr>
             {% for row in db_contents %}
             <tr>
                 <td>{{ row[0] }}</td>
                 <td>{{ row[1] }}</td>
-                <td class="plain">{{ row[2] }}</td>
+                <td class="hashed">{{ row[2] }}</td>
             </tr>
             {% endfor %}
         </table>

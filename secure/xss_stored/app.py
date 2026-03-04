@@ -1,30 +1,39 @@
 from flask import Flask, request, render_template
 import sqlite3
+import html
+
 import os
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 
-app = Flask(__name__)
-DB = os.path.join(os.path.dirname(__file__), "comments.db")
 
-def init_db():
-    with sqlite3.connect(DB) as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS comments (
-                id INTEGER PRIMARY KEY,
-                comment TEXT
-            )
-        """)
+def get_db():
+    conn = sqlite3.connect('../../vulnerable/xss_stored/comments.db')
+    return conn
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        comment = request.form["comment"]
-        with sqlite3.connect(DB) as conn:
-            conn.execute("INSERT INTO comments VALUES (NULL, ?)", (comment,))
-    with sqlite3.connect(DB) as conn:
-        comments = conn.execute("SELECT comment FROM comments").fetchall()
-    comments = [c[0] for c in comments]
-    return render_template("index.html", comments=comments)
+@app.route('/', methods=['GET', 'POST'])
+def comments():
+    if request.method == 'POST':
+        username = request.form['username']
+        comment = request.form['comment']
 
-if __name__ == "__main__":
-    init_db()
-    app.run(port=5004, debug=True)
+        # SECURE: Escaping user input before storing it
+        # This converts <script> into &lt;script&gt; — harmless plain text
+        username = html.escape(username)
+        comment = html.escape(comment)
+
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("INSERT INTO comments (username, comment) VALUES (?, ?)", (username, comment))
+        conn.commit()
+        conn.close()
+
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("SELECT * FROM comments")
+    comments = c.fetchall()
+    conn.close()
+
+    return render_template('comments.html', comments=comments)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5004)

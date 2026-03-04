@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Search - Secure</title>
+    <title>vulnlab-web - Secure Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #4ecca3; }
+        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 10px; border: none; border-radius: 5px; background: #0f3460; color: #eee; }
+        button { padding: 10px 20px; background: #4ecca3; border: none; border-radius: 5px; color: #1a1a1a; cursor: pointer; }
+        .result { background: #162e16; padding: 12px; margin: 8px 0; border-radius: 5px; border-left: 4px solid #4ecca3; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
+        .search-info { color: #aaa; margin-bottom: 15px; }
+    </style>
 </head>
 <body>
-    <h2>Search</h2>
-    <form method="GET">
-        <input type="text" name="q" placeholder="Search..."><br><br>
-        <button type="submit">Search</button>
-    </form>
-    {% if result %}
-        <p>You searched for: {{ result }}</p>
+    <h2> Secure Search Demo</h2>
+
+    <div class="hint">
+         <strong>Try the same attack:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code> — it will show as plain text!
+    </div>
+
+    <div class="search-bar">
+        <form method="GET" action="/search" style="display:flex; width:100%; gap:10px;">
+            <input type="text" name="q" placeholder="Search..." value="{{ query or '' }}"/>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if query %}
+    <!-- SECURE: Jinja2 auto-escaping, no | safe filter -->
+    <p class="search-info">Showing results for: {{ query }}</p>
+    {% endif %}
+
+    {% if results %}
+        {% for result in results %}
+        <div class="result">{{ result }}</div>
+        {% endfor %}
     {% endif %}
 </body>
-</html>

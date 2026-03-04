@@ -14,7 +14,7 @@ No prior hacking experience needed. Beginner friendly.
 When learning web security, reading about vulnerabilities is not enough.
 You need to actually exploit them to truly understand how they work.
 
-vulnlab-web gives you a safe place to do exactly that. Every vulnerability in this
+VulneLab-Webapp gives you a safe place to do exactly that. Every vulnerability in this
 project has two versions:
 
 - A **vulnerable version** — intentionally broken code you can attack
@@ -90,8 +90,8 @@ Can you find all 4?
 
 Open a terminal and run:
 ```
-git clone https://github.com/jad-fahmi/vulnlab-web.git
-cd vulnlab-web
+git clone https://github.com/jad-fahmi/VulneLab-Webapp.git
+cd VulneLab-Webapp
 ```
 
 ---

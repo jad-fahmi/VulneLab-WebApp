@@ -1,18 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Comment Board - Secure</title>
+    <title>vulnlab-web - Secure Comments</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #4ecca3; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
+        button { padding: 10px 25px; background: #4ecca3; border: none; border-radius: 5px; color: #1a1a1a; font-size: 15px; cursor: pointer; }
+        .comment-box { background: #162e16; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4ecca3; }
+        .comment-user { color: #4ecca3; font-weight: bold; margin-bottom: 5px; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
-    <h2>Comment Board</h2>
+    <h2> Secure Comment Board</h2>
+
+    <div class="hint">
+         <strong>Try the same attack:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code> — it will be stored as plain text, not executed!
+ feature/idor
+
+
+    <h2>Secure Comment Board</h2>
+
+    <div class="hint">
+         <strong>Try the same attack:</strong> <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code> — it will be stored as plain text, not executed!
+ main
+ main
+    </div>
+
     <form method="POST">
-        <input type="text" name="comment" placeholder="Leave a comment"><br><br>
-        <button type="submit">Submit</button>
+        <input type="text" name="username" placeholder="Your name" required/>
+        <textarea name="comment" placeholder="Write a comment..." rows="3" required></textarea>
+        <button type="submit">Post Comment</button>
     </form>
+
     <h3>Comments:</h3>
     {% for comment in comments %}
-        <p>{{ comment }}</p>
+    <div class="comment-box">
+        <div class="comment-user">{{ comment[1] }}</div>
+        <!-- SECURE: Rendering comment as plain text, NOT raw HTML -->
+        <div>{{ comment[2] }}</div>
+    </div>
     {% endfor %}
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>VulneLab-Webapp - Secure Login</title>
+    <title>vulnlab-web - Secure IDOR Demo</title>
     <style>
         body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .box { background: #162e16; padding: 40px; border-radius: 10px; width: 350px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
@@ -9,20 +9,20 @@
         input { width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #0f3460; color: #eee; box-sizing: border-box; }
         button { width: 100%; padding: 10px; background: #4ecca3; border: none; border-radius: 5px; color: #1a1a1a; font-size: 16px; cursor: pointer; }
         .error { color: #e94560; text-align: center; }
-        .success { color: #4ecca3; text-align: center; }
         .hint { margin-top: 20px; padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; }
     </style>
 </head>
 <body>
     <div class="box">
-        <h2>Secure Login</h2>
+        <h2> Secure IDOR Demo</h2>
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required/>
-            <input type="password" name="password" placeholder="Password" required/>
             <button type="submit">Login</button>
         </form>
+        {% if error %}<p class="error">{{ error }}</p>{% endif %}
         <div class="hint">
-            Try the injection: <code>' OR '1'='1</code> as username — it will not work here!
+             <strong>Available users:</strong> alice, bob, charlie<br>
+            Try changing <code>?id=</code> in the URL — it won't work!
         </div>
     </div>
 </body>

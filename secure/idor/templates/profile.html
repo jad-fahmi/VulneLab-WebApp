@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>VulneLab-Webapp - IDOR Profile</title>
+    <title>vulnlab-web - Secure Profile</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
-        h2 { color: #e94560; }
-        .profile-box { background: #16213e; padding: 25px; border-radius: 10px; margin-top: 20px; }
+        body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #4ecca3; }
+        .profile-box { background: #162e16; padding: 25px; border-radius: 10px; margin-top: 20px; }
         .field { margin: 12px 0; padding: 10px; background: #0f3460; border-radius: 5px; }
         .label { color: #aaa; font-size: 13px; }
         .value { font-size: 16px; margin-top: 3px; }
-        .warning { background: #3d0000; border: 1px solid #e94560; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #e94560; }
         .safe { background: #003d00; border: 1px solid #4ecca3; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #4ecca3; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
-        a { color: #e94560; }
+        a { color: #4ecca3; }
         .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="nav">
-        <h2>IDOR - Profile Viewer</h2>
+        <h2> Secure Profile Viewer</h2>
         <a href="/logout">Logout</a>
     </div>
 
-    <p>Logged in as: <strong>{{ logged_in_as }}</strong></p>
-
-    {% if not is_own_profile %}
-    <div class="warning">
-         <strong>IDOR Detected!</strong> You are viewing someone else's private profile!
-    </div>
-    {% else %}
     <div class="safe">
-         You are viewing your own profile.
+         Profile loaded from server-side session — URL manipulation is ignored!
     </div>
-    {% endif %}
 
     <div class="profile-box">
         <div class="field">
@@ -58,9 +49,7 @@
     </div>
 
     <div class="hint">
-         <strong>Try changing the URL:</strong> 
-        <code>http://127.0.0.1:5007/profile?id=1</code>, 
-        <code>?id=2</code>, <code>?id=3</code>
+         <strong>Try adding</strong> <code>?id=2</code> or <code>?id=3</code> to the URL — you'll always see your own profile only!
     </div>
 </body>
 </html>

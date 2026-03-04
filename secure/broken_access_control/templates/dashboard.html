@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vulnlab-web - Secure Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a2e1a; color: #eee; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #4ecca3; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .card { background: #162e16; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        .role { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 13px; background: #0f3460; }
+        a { color: #4ecca3; text-decoration: none; }
+        .hint { padding: 10px; background: #0f3460; border-radius: 5px; font-size: 13px; color: #aaa; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h2>Secure Dashboard</h2>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="card">
+        <p>Welcome, <strong>{{ username }}</strong></p>
+        <p>Role: <span class="role">{{ role }}</span></p>
+        {% if role == 'admin' %}
+        <p><a href="/admin">Go to Admin Panel</a></p>
+        {% else %}
+        <p>You do not have access to the admin panel.</p>
+        {% endif %}
+    </div>
+
+    <div class="hint">
+        Logged in as a regular user? Try navigating directly to
+        <code>http://127.0.0.1:5012/admin</code> — you will be blocked!
+    </div>
+</body>
+</html>
