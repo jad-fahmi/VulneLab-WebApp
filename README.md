@@ -180,15 +180,6 @@ This project contains intentionally vulnerable code for educational purposes onl
 - SQLite
 - bcrypt
 
----
-
-## Intro Video
-
-Watch Introduction to VulneLab-WebApp:
-
-[![INTRO - VulneLab-WebApp](https://img.youtube.com/vi/NJCsaGgIPDo/maxresdefault.jpg)](https://www.youtube.com/watch?v=NJCsaGgIPDo)
-
-> Click the thumbnail above to watch it on YouTube.
 
 ---
 
